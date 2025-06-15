@@ -3,7 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <title>Copyright Transfer Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, button, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+    }
+    button {
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3498db;
+    }
+  </style>
 </head>
+
 <body>
   <h1>Copyright Transfer Agreement</h1>
 
@@ -38,6 +66,13 @@
       <li><a href="{{ url_for('download', filename=sig_path) }}">Download Signature File</a></li>
       <li><a href="{{ url_for('download', filename=priv_path) }}">Download Your Private Key</a></li>
     </ul>
+   <h2>What you will receive:</h2>
+   <ul>
+     <li><strong>copyright_transfer.pdf</strong>: The signed copyright transfer agreement</li>
+     <li><strong>certificate.pem</strong>: Your public certificate</li>
+     <li><strong>signature.bin</strong>: Digital signature of the document</li>
+     <li><strong>private_key.pem</strong>: Your private key (keep this safe!)</li>
+   </ul>
     <p><strong>SHA-256 Hash:</strong> {{ hash_value }}</p>
     <p>Please send the first three files via email to the publisher.</p>
   {% endif %}
