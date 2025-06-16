@@ -33,46 +33,49 @@
 </head>
 
 <body>
-<img src="D8_Alg_qq_2.jpg" style="position: absolute; top: 10px; left: 10px;">
-<img src="ICAITD_Credit_LOGO.png" style="position: absolute; top: 10px; right: 10px;">
+##<img src="D8_Alg_qq_2.jpg" style="position: absolute; top: 10px; left: 10px;">
+<img src="{{ url_for('static', filename='img/D8_Alg_qq_2.jpg') }}"  style="height: 80px;position: absolute; top: 10px; left: 10px;">
+<img src="{{ url_for('static', filename='img/ICAITD_Credit_LOGO.png') }}"  style="height: 120px;position: absolute; top: 10px; right: 10px;">
+##<img src="ICAITD_Credit_LOGO.png" style="position: absolute; top: 10px; right: 10px;">
 
   <h1>Copyright Transfer Agreement</h1><h3>(For U.S. Authors Submitting to a Japanese Publisher)</h3>
 1. Article Information
     Proceedings of the Second International Conference of AI new Technology and open Discussion (ICAITD 2025)
     Publisher: Algorithm Lab.
-  <p><strong>Manuscript Title:</strong> {{ title }}</p><br><br>
+  <p><strong>Manuscript Title:</strong> {{ title }}</p>
 
   <p>
     I, the undersigned author, hereby agree to transfer and assign to the Publisher Algorithm Lab. all copyrights to the work described below, including but not limited to the rights specified under Articles 21 and 23 of the Japanese Copyright Act.the copyright to the above-titled manuscript. 
     This transfer includes all rights to publish, reproduce, and distribute the work in any medium, now and in the future.<br><br>
 
 2. Rights Transferred
-The Author transfers to the Publisher the exclusive rights to:
-    • Reproduce the Work in printed or digital formats (Japanese Copyright Act, Article 21)
-    • Publicly transmit the Work, including making it available via the internet (Japanese Copyright Act, Article 23)
+The Author transfers to the Publisher the exclusive rights to:<br>
+    • Reproduce the Work in printed or digital formats (Japanese Copyright Act, Article 21)<br>
+    • Publicly transmit the Work, including making it available via the internet (Japanese Copyright Act, Article 23)<br>
 These rights are granted solely for the purposes of publication and distribution of the article in the above-mentioned Proceedings and related electronic archives.
 No other rights are transferred.
-In particular, the Author does not transfer the rights under:
-    • Article 27 (Right to create derivative works)
+In particular, the Author does not transfer the rights under:<br>
+    • Article 27 (Right to create derivative works)<br>
     • Article 28 (Right to exploit derivative works)<br><br>
 
 3. Rights Retained by the Author
-The Author retains the right to:
-    • Use the Work in academic teaching, lectures, and presentations
-    • Reuse the Work in future works (e.g., books or collected papers) with proper citation
+The Author retains the right to:<br>
+    • Use the Work in academic teaching, lectures, and presentations<br>
+    • Reuse the Work in future works (e.g., books or collected papers) with proper citation<br>
     • Deposit the article in institutional repositories or personal websites in accordance with Publisher’s policies<br><br>
 
 4. Author’s Warranty
-The Author warrants that:
-    • The Work is original and does not infringe upon the rights of third parties
-    • All co-authors (if any) have agreed to the submission and this agreement
-    • The Work has not been previously published and is not under consideration elsewhere
+The Author warrants that:<br>
+    • The Work is original and does not infringe upon the rights of third parties<br>
+    • All co-authors (if any) have agreed to the submission and this agreement<br>
+    • The Work has not been previously published and is not under consideration elsewhere<br>
     • The Author has the legal authority as a representative to sign and assign the rights stated herein<br><br>
 
 5. Governing Law
 This Agreement shall be governed by the laws of Japan. Any disputes shall be subject to the exclusive jurisdiction of the Tokyo District Court.<br><br>
 
   </p>
+<p> Please download four files. Send the first three files via return e-mail. Do not publicate the fourth file of secret key. The fourth secret key is only valid for this challenge and response process. After process completed, it will be void. And it will be removed from the server after your download </p>
 
   <form method="post">
     <label for="author_name">Author Name(Representative):</label><br>

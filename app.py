@@ -45,3 +45,20 @@ def download(filename):
 
 if __name__ == "__main__":
     app.run(debug=True)
+##add
+##remove response-file after download
+from flask import after_this_request
+
+@app.route("/download/<filename>")
+def download(filename):
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+    @after_this_request
+    def remove_file(response):
+        try:
+            os.remove(file_path)
+        except Exception as e:
+            app.logger.error(f"Error deleting file {file_path}: {e}")
+        return response
+
+    return send_file(file_path, as_attachment=True)
