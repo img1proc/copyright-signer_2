@@ -37,7 +37,7 @@
 <img src="{{ url_for('static', filename='img/D8_Alg_qq_2.jpg') }}" alt="Logo" style="height: 80px;position: absolute; top: 10px; left: 10px;">
 <img src="{{ url_for('static', filename='img/ICAITD_Credit_LOGO.png') }}"  alt="Logo" style="height: 120px;position: absolute; top: 10px; right: 10px;">
 ##<img src="ICAITD_Credit_LOGO.png" style="position: absolute; top: 10px; right: 10px;">
-
+<br><br><br>
   <h1>Copyright Transfer Agreement</h1><h3>(For U.S. Authors Submitting to a Japanese Publisher)</h3>
 1. Article Information
     Proceedings of the Second International Conference of AI new Technology and open Discussion (ICAITD 2025)
@@ -75,7 +75,7 @@ The Author warrants that:<br>
 This Agreement shall be governed by the laws of Japan. Any disputes shall be subject to the exclusive jurisdiction of the Tokyo District Court.<br><br>
 
   </p>
-<p> Please download four files. Send the first three files via return e-mail. Do not publicate the fourth file of secret key. The fourth secret key is only valid for this challenge and response process. After process completed, it will be void. And it will be removed from the server after your download </p>
+<p> Please fill in the boxes below, and download four files. Send the first three files via return e-mail. Do not publicate the fourth file of secret key. The fourth secret key is only valid for this challenge and response process. After process completed, it will be void. And it will be removed from the server after your download </p>
 
   <form method="post">
     <label for="author_name">Author Name(Representative):</label><br>
@@ -96,20 +96,18 @@ This Agreement shall be governed by the laws of Japan. Any disputes shall be sub
   {% if pdf_path %}
     <h2>Generated Files</h2>
     <ul>
-      <li><a href="{{ url_for('download', filename=pdf_path) }}">Download Copyright Transfer PDF</a></li>
-      <li><a href="{{ url_for('download', filename=cert_path) }}">Download Certificate (Public Key)</a></li>
-      <li><a href="{{ url_for('download', filename=sig_path) }}">Download Signature File</a></li>
-      <li><a href="{{ url_for('download', filename=priv_path) }}">Download Your Private Key</a></li>
+      <li><a href="{{ url_for('download', filename=pdf_path) }}">Download Copyright Transfer PDF</a><br>
+     <strong>	copyright_transfer.pdf</strong>: The signed copyright transfer agreement</li>
+      <li><a href="{{ url_for('download', filename=cert_path) }}">Download Certificate (Public Key)</a><br>
+             <strong>	certificate.pem</strong>: Your public certificate</li>
+      <li><a href="{{ url_for('download', filename=sig_path) }}">Download Signature File</a><br>
+       <strong>	signature.bin</strong>: Digital signature of the document</li>
+      <li><a href="{{ url_for('download', filename=priv_path) }}">Download Your Private Key</a>
+          <strong>	private_key.pem</strong>: Your private key (keep this safe! This key will be removed from the server after your download)</li>
     </ul>
-   <h2>What you will receive:</h2>
-   <ul>
-     <li><strong>copyright_transfer.pdf</strong>: The signed copyright transfer agreement</li>
-     <li><strong>certificate.pem</strong>: Your public certificate</li>
-     <li><strong>signature.bin</strong>: Digital signature of the document</li>
-     <li><strong>private_key.pem</strong>: Your private key (keep this safe!)</li>
-   </ul>
-    <p><strong>SHA-256 Hash:</strong> {{ hash_value }}</p>
-    <p>Please send the first three files via email to the publisher.</p>
+
+ <p><strong>SHA-256 Hash, which was calculated from Copyright_Transfer.pdf=:</strong> {{ hash_value }}</p>
+    <p>Please send the first three files via re-email to the publisher(Ohzeki, Algorithm_Lab.).</p>
   {% endif %}
 
   {% if error %}
