@@ -38,13 +38,7 @@ def home():
 
     return render_template("index.html", title=title)
 
-@app.route("/download/<filename>")
-def download(filename):
-    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    return send_file(file_path, as_attachment=True)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+##see old app_7.py 
 ##add
 ##remove response-file after download
 from flask import after_this_request
