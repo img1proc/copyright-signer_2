@@ -78,3 +78,11 @@ def download(filename):
         return response
 
     return send_file(file_path, as_attachment=True)
+
+import logging
+import traceback
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    logging.error("Unhandled Exception", exc_info=True)
+    return "Internal Server Error", 500
