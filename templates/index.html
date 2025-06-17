@@ -1,117 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Copyright Transfer Form</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background-color: #f9f9f9;
-    }
-    h1 {
-      color: #2c3e50;
-    }
-    label {
-      font-weight: bold;
-    }
-    input, button, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 12px;
-    }
-    button {
-      background-color: #2980b9;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #3498db;
-    }
-  </style>
+    <title>Copyright Transfer Form</title>
 </head>
-
 <body>
-##<img src="D8_Alg_qq_2.jpg" style="position: absolute; top: 10px; left: 10px;">
-<img src="{{ url_for('static', filename='img/D8_Alg_qq_2.jpg') }}" alt="Logo" style="height: 80px;position: absolute; top: 10px; left: 10px;">
-<img src="{{ url_for('static', filename='img/ICAITD_Credit_LOGO.png') }}"  alt="Logo" style="height: 120px;position: absolute; top: 10px; right: 10px;">
-##<img src="ICAITD_Credit_LOGO.png" style="position: absolute; top: 10px; right: 10px;">
-<br><br><br>
-  <h1>Copyright Transfer Agreement</h1><h3>(For U.S. Authors Submitting to a Japanese Publisher)</h3>
-1. Article Information
-    Proceedings of the Second International Conference of AI new Technology and open Discussion (ICAITD 2025)
-    Publisher: Algorithm Lab.
-  <p><strong>Manuscript Title:</strong> {{ title }}</p>
+    <h1>Copyright Transfer Agreement</h1>
+    <p>This form confirms the author's copyright transfer for the indicated paper.</p>
 
-  <p>
-    I, the undersigned author, hereby agree to transfer and assign to the Publisher Algorithm Lab. all copyrights to the work described below, including but not limited to the rights specified under Articles 21 and 23 of the Japanese Copyright Act.the copyright to the above-titled manuscript. 
-    This transfer includes all rights to publish, reproduce, and distribute the work in any medium, now and in the future.<br><br>
+    {% if error %}
+        <p style="color: red">{{ error }}</p>
+    {% endif %}
 
-2. Rights Transferred
-The Author transfers to the Publisher the exclusive rights to:<br>
-    • Reproduce the Work in printed or digital formats (Japanese Copyright Act, Article 21)<br>
-    • Publicly transmit the Work, including making it available via the internet (Japanese Copyright Act, Article 23)<br>
-These rights are granted solely for the purposes of publication and distribution of the article in the above-mentioned Proceedings and related electronic archives.
-No other rights are transferred.
-In particular, the Author does not transfer the rights under:<br>
-    • Article 27 (Right to create derivative works)<br>
-    • Article 28 (Right to exploit derivative works)<br><br>
+    <form method="post">
+        <label>Your Name:</label><br>
+        <input type="text" name="author_name" required><br><br>
 
-3. Rights Retained by the Author
-The Author retains the right to:<br>
-    • Use the Work in academic teaching, lectures, and presentations<br>
-    • Reuse the Work in future works (e.g., books or collected papers) with proper citation<br>
-    • Deposit the article in institutional repositories or personal websites in accordance with Publisher’s policies<br><br>
+        <label>Your Affiliation:</label><br>
+        <input type="text" name="affiliation" required><br><br>
 
-4. Author’s Warranty
-The Author warrants that:<br>
-    • The Work is original and does not infringe upon the rights of third parties<br>
-    • All co-authors (if any) have agreed to the submission and this agreement<br>
-    • The Work has not been previously published and is not under consideration elsewhere<br>
-    • The Author has the legal authority as a representative to sign and assign the rights stated herein<br><br>
+        <label>Your Address:</label><br>
+        <input type="text" name="address" required><br><br>
 
-5. Governing Law
-This Agreement shall be governed by the laws of Japan. Any disputes shall be subject to the exclusive jurisdiction of the Tokyo District Court.<br><br>
+        <label>Date:</label><br>
+        <input type="date" name="date" required><br><br>
 
-  </p>
-<p> Please fill in the boxes below, and download four files. Send the first three files via return e-mail. Do not publicate the fourth file of secret key. The fourth secret key is only valid for this challenge and response process. After process completed, it will be void. And it will be removed from the server after your download </p>
+        <button type="submit">Sign and Submit</button>
+    </form>
 
-  <form method="post">
-    <label for="author_name">Author Name(Representative):</label><br>
-    <input type="text" id="author_name" name="author_name" required><br><br>
+    {% if hash_value %}
+        <h2>Result</h2>
+        <p><strong>SHA-256 Hash of PDF:</strong></p>
+        <textarea rows="2" cols="80" readonly>{{ hash_value }}</textarea>
 
-    <label for="affiliation">Affiliation:</label><br>
-    <input type="text" id="affiliation" name="affiliation" required><br><br>
+        <p><strong>Base64 Signature:</strong></p>
+        <textarea rows="4" cols="80" readonly>{{ signature_b64 }}</textarea>
 
-    <label for="address">Address:</label><br>
-    <input type="text" id="address" name="address" required><br><br>
-
-    <label for="date">Date:</label><br>
-    <input type="date" id="date" name="date" required><br><br>
-
-    <button type="submit">Sign and Generate Files</button>
-  </form>
-
-  {% if pdf_path %}
-    <h2>Generated Files</h2>
-    <ul>
-      <li><a href="{{ url_for('download', filename=pdf_path) }}">Download Copyright Transfer PDF</a><br>
-     <strong>	copyright_transfer.pdf</strong>: The signed copyright transfer agreement</li>
-      <li><a href="{{ url_for('download', filename=cert_path) }}">Download Certificate (Public Key)</a><br>
-             <strong>	certificate.pem</strong>: Your public certificate</li>
-      <li><a href="{{ url_for('download', filename=sig_path) }}">Download Signature File</a><br>
-       <strong>	signature.bin</strong>: Digital signature of the document</li>
-      <li><a href="{{ url_for('download', filename=priv_path) }}">Download Your Private Key</a>
-          <strong>	private_key.pem</strong>: Your private key (keep this safe! This key will be removed from the server after your download)</li>
-    </ul>
-
- <p><strong>SHA-256 Hash, which was calculated from Copyright_Transfer.pdf=:</strong> {{ hash_value }}</p>
-    <p>Please send the first three files via re-email to the publisher(Ohzeki, Algorithm_Lab.).</p>
-  {% endif %}
-
-  {% if error %}
-    <p style="color: red;"><strong>Error:</strong> {{ error }}</p>
-  {% endif %}
+        <h3>Download Files</h3>
+        <ul>
+            <li><a href="/download/{{ files.pdf }}">Download Signed PDF</a></li>
+            <li><a href="/download/{{ files.signature }}">Download Signature</a></li>
+            <li><a href="/download/{{ files.public_key }}">Download Public Key</a></li>
+            <li><a href="/download/{{ files.private_key }}">Download Private Key</a></li>
+        </ul>
+    {% endif %}
 </body>
 </html>
