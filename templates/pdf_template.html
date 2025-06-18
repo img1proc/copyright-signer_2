@@ -8,37 +8,55 @@
   </style>
 </head>
 <body>
-  <img src="{{ url_for('static', filename='img/ICAITD_Credit_LOGO.png') }}" style="height: 80px; float: right;">
-  <h1>Copyright Transfer Agreement</h1>
+##  <img src="{{ url_for('static', filename='img/ICAITD_Credit_LOGO.png') }}" style="height: 80px; float: right;">
+<img src="{{ url_for('static', filename='img/D8_Alg_qq_2.jpg') }}" alt="Logo" style="height: 80px;position: absolute; top: 10px; left: 10px;">
+<img src="{{ url_for('static', filename='img/ICAITD_Credit_LOGO.png') }}"  alt="Logo2" style="height: 120px;position: absolute; top: 10px; right: 50px;"><br><br><br><br>
+  <h1>Copyright Transfer Agreement</h1><h3>(For U.S. Authors Submitting to a Japanese Publisher)</h3>
+
+  <h2>Publisher’s Notice</h2>
+  <p>
+    This agreement outlines the terms and conditions for transferring the copyright of the submitted manuscript to the publisher.
+    Please read all sections carefully before entering your information and generating the official document.
+  </p>
+
+<h3>1. Article Information</h3>
 
   <p><strong>Title:</strong> {{ title }}</p>
   <p>
-    Proceedings of the Second International Conference of AI new Technology and open Discussion (ICAITD 2025)<br>
+    Published as Proceedings of the Second International Conference of AI new Technology and open Discussion (ICAITD 2025)<br>
     Publisher: Algorithm Lab.
   </p>
 
-  <h2>1. Rights Transferred</h2>
+  <h3>2. Rights Transferred</h3>
   <p>
-    The Author transfers to the Publisher the exclusive rights to:
-    <ul>
-      <li>Reproduce the Work in printed or digital formats (Japanese Copyright Act, Article 21)</li>
-      <li>Publicly transmit the Work (Article 23)</li>
-    </ul>
-    This does <strong>not</strong> include rights under:
-    <ul>
-      <li>Article 27 (Derivative works)</li>
-      <li>Article 28 (Exploitation of derivative works)</li>
-    </ul>
+     I, the undersigned author, hereby agree to transfer and assign to the Publisher Algorithm Lab. all copyrights to the work described below.<br>
+    The Author transfers to the Publisher the exclusive rights to:<br>
+    • Reproduce the Work in printed or digital formats (Japanese Copyright Act, Article 21)<br>
+    • Publicly transmit the Work (Article 23)<br><br>
+    This does <strong>not</strong> include rights under:<br>
+    • Article 27 (Derivative works)<br>
+    • Article 28 (Exploitation of derivative works)
   </p>
 
-  <h2>2. Rights Retained</h2>
-  <p>The Author retains the right to reuse the work in lectures, future publications, or repositories.</p>
+  <h3>3. Rights Retained by Author</h3>
+  <p>    The Author retains the right to:<br>
+    • Use the Work in academic teaching, lectures, and presentations<br>
+    • Reuse the Work in future works (e.g., books or collected papers) with proper citation<br>
+    • Deposit the article in institutional repositories or personal websites in accordance with Publisher’s policies
+</p>
 
-  <h2>3. Author’s Warranty</h2>
-  <p>The Author confirms originality, agreement from co-authors, and no prior publication.</p>
+  <h3>4. Author’s Warranty</h3>
+  <p> The Author warrants that:<br>
+    • The Work is original and does not infringe upon the rights of third parties<br>
+    • All co-authors (if any) have agreed to the submission and this agreement<br>
+    • The Work has not been previously published and is not under consideration elsewhere<br>
+    • The Author has the legal authority as a representative to sign and assign the rights stated herein
+</p>
 
-  <h2>4. Governing Law</h2>
-  <p>This agreement is governed by Japanese law. Tokyo District Court shall have jurisdiction.</p>
+  <h3>5. Governing Law</h3>
+  <p>This agreement shall be governed by the laws of Japan.</p>
+
+  <h3>Please fill in the fields below to generate the PDF. Then the next page will produce four files. Send the first three files via return e-mail. Do not publicate the fourth file of privare/secret key. The fourth secret key is only valid for this challenge and response process. After process completed, it will be void. And it will be removed from the server after your download.</h3>
 
   <hr>
   <p><strong>Author Name:</strong> {{ author_name }}</p>
