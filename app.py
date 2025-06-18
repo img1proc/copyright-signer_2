@@ -19,7 +19,7 @@ def step1():
         address = request.form["address"]
         date = request.form["date"]
 
-        # PDF生成用HTMLレンダリング
+        # PDF生成用HTMLを描画して出力
         html = render_template("pdf_template.html",
                                title=title,
                                author_name=author_name,
@@ -40,16 +40,12 @@ def step2():
     priv_path = os.path.join(UPLOAD_FOLDER, "private_key.pem")
 
     try:
-        # 鍵生成
+        # 鍵生成（公開鍵・秘密鍵を保存）
         private_key, _ = generate_keys(UPLOAD_FOLDER)
 
-        # ハッシュ＋署名
+        # PDFファイルに対して署名・ハッシュ計算
         hash_value, signature = sign_pdf(private_key, PDF_PATH, sig_path)
         signature_b64 = base64.b64encode(signature).decode()
-
-        # 秘密鍵削除
-        if os.path.exists(priv_path):
-            os.remove(priv_path)
 
         return render_template("step2.html",
                                hash_value=hash_value,
@@ -57,7 +53,8 @@ def step2():
                                files={
                                    "pdf": PDF_FILENAME,
                                    "signature": "signature.bin",
-                                   "public_key": "public_key.pem"
+                                   "public_key": "public_key.pem",
+                                   "private_key": "private_key.pem"
                                })
 
     except Exception as e:
@@ -77,3 +74,7 @@ def download(filename):
         return response
 
     return send_file(file_path, as_attachment=True)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
