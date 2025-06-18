@@ -2,15 +2,48 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <style>body { font-family: Arial; }</style>
+  <style>
+    body { font-family: Arial; }
+    h1, h2, h3 { color: #333; }
+  </style>
 </head>
 <body>
+  <img src="{{ url_for('static', filename='img/ICAITD_Credit_LOGO.png') }}" style="height: 80px; float: right;">
   <h1>Copyright Transfer Agreement</h1>
-  <p><strong>Paper Title:</strong> {{ title }}</p>
+
+  <p><strong>Title:</strong> {{ title }}</p>
+  <p>
+    Proceedings of the Second International Conference of AI new Technology and open Discussion (ICAITD 2025)<br>
+    Publisher: Algorithm Lab.
+  </p>
+
+  <h2>1. Rights Transferred</h2>
+  <p>
+    The Author transfers to the Publisher the exclusive rights to:
+    <ul>
+      <li>Reproduce the Work in printed or digital formats (Japanese Copyright Act, Article 21)</li>
+      <li>Publicly transmit the Work (Article 23)</li>
+    </ul>
+    This does <strong>not</strong> include rights under:
+    <ul>
+      <li>Article 27 (Derivative works)</li>
+      <li>Article 28 (Exploitation of derivative works)</li>
+    </ul>
+  </p>
+
+  <h2>2. Rights Retained</h2>
+  <p>The Author retains the right to reuse the work in lectures, future publications, or repositories.</p>
+
+  <h2>3. Author’s Warranty</h2>
+  <p>The Author confirms originality, agreement from co-authors, and no prior publication.</p>
+
+  <h2>4. Governing Law</h2>
+  <p>This agreement is governed by Japanese law. Tokyo District Court shall have jurisdiction.</p>
+
+  <hr>
   <p><strong>Author Name:</strong> {{ author_name }}</p>
   <p><strong>Affiliation:</strong> {{ affiliation }}</p>
   <p><strong>Address:</strong> {{ address }}</p>
   <p><strong>Date:</strong> {{ date }}</p>
-  <p>This document certifies the transfer of copyright to the Publisher...</p>
 </body>
 </html>

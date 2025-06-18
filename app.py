@@ -3,7 +3,7 @@ import os, tempfile, base64
 
 from utils.pdf_generator import generate_pdf_from_html
 from utils.crypto import generate_keys, sign_pdf
-
+##1. app.py（step1 → step2まで対応）250618_19_10
 app = Flask(__name__)
 UPLOAD_FOLDER = tempfile.gettempdir()
 PDF_FILENAME = "copyright_transfer.pdf"
@@ -19,7 +19,6 @@ def step1():
         address = request.form["address"]
         date = request.form["date"]
 
-        # PDF生成用HTMLを描画して出力
         html = render_template("pdf_template.html",
                                title=title,
                                author_name=author_name,
@@ -32,7 +31,6 @@ def step1():
 
     return render_template("step1.html", title=title)
 
-
 @app.route("/sign")
 def step2():
     sig_path = os.path.join(UPLOAD_FOLDER, "signature.bin")
@@ -40,10 +38,10 @@ def step2():
     priv_path = os.path.join(UPLOAD_FOLDER, "private_key.pem")
 
     try:
-        # 鍵生成（公開鍵・秘密鍵を保存）
+        # 秘密鍵・公開鍵生成
         private_key, _ = generate_keys(UPLOAD_FOLDER)
 
-        # PDFファイルに対して署名・ハッシュ計算
+        # PDFハッシュ計算＋署名
         hash_value, signature = sign_pdf(private_key, PDF_PATH, sig_path)
         signature_b64 = base64.b64encode(signature).decode()
 
@@ -56,10 +54,8 @@ def step2():
                                    "public_key": "public_key.pem",
                                    "private_key": "private_key.pem"
                                })
-
     except Exception as e:
         return f"Error during signing: {e}", 500
-
 
 @app.route("/download/<filename>")
 def download(filename):
@@ -74,7 +70,6 @@ def download(filename):
         return response
 
     return send_file(file_path, as_attachment=True)
-
 
 if __name__ == "__main__":
     app.run(debug=True)

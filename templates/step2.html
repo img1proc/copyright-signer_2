@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Step 2: Signed Output</title>
+  <title>Step 2: Signing Complete</title>
 </head>
 <body>
-  <h1>Signature Completed</h1>
-
+  <h1>Signature Generated</h1>
+##2. step2_4.html（4ファイルダウンロード対応）:250618_19_00
   <p><strong>SHA-256 Hash of PDF:</strong></p>
   <textarea rows="2" cols="80" readonly>{{ hash_value }}</textarea>
 
   <p><strong>Base64 Signature:</strong></p>
   <textarea rows="4" cols="80" readonly>{{ signature_b64 }}</textarea>
 
-  <h3>Download All 4 Files</h3>
+  <h3>Download Files</h3>
   <ul>
     <li><a href="/download/{{ files.pdf }}">📄 Download PDF</a></li>
     <li><a href="/download/{{ files.signature }}">🔏 Download Signature</a></li>
@@ -20,6 +20,6 @@
     <li><a href="/download/{{ files.private_key }}">🗝️ Download Private Key</a></li>
   </ul>
 
-  <p><strong>Note:</strong> Please send back the first 3 files by email. The private key is for your record only and will be deleted after download.</p>
+  <p><strong>Note:</strong> Please send back the first three files via email. The private key is for your record only and will be deleted after download.</p>
 </body>
 </html>
