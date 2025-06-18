@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><title>Step 2: Signature</title></head>
+<body>
+  <h1>PDF Signature Completed</h1>
+  <p><strong>SHA-256 Hash:</strong></p>
+  <textarea rows="2" cols="80" readonly>{{ hash_value }}</textarea>
+
+  <p><strong>Base64 Signature:</strong></p>
+  <textarea rows="4" cols="80" readonly>{{ signature_b64 }}</textarea>
+
+  <h3>Download Files</h3>
+  <ul>
+    <li><a href="/download/{{ files.pdf }}">Download Signed PDF</a></li>
+    <li><a href="/download/{{ files.signature }}">Download Signature</a></li>
+    <li><a href="/download/{{ files.public_key }}">Download Public Key</a></li>
+  </ul>
+</body>
+</html>

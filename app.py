@@ -1,76 +1,67 @@
-from flask import Flask, render_template, request, send_file, after_this_request
-from flask import render_template_string
-import os, tempfile
-import base64
+from flask import Flask, render_template, request, send_file, redirect, url_for, after_this_request
+import os, tempfile, base64
 
-from utils.crypto import generate_keys, sign_pdf
 from utils.pdf_generator import generate_pdf_from_html
+from utils.crypto import generate_keys, sign_pdf
 
 app = Flask(__name__)
 UPLOAD_FOLDER = tempfile.gettempdir()
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+PDF_FILENAME = "copyright_transfer.pdf"
+PDF_PATH = os.path.join(UPLOAD_FOLDER, PDF_FILENAME)
 
 @app.route("/", methods=["GET", "POST"])
-def index():
-    hash_value = None
-    signature_b64 = None
-    files = {}
-    error = None
-
-    # 論文タイトル取得（クエリ文字列）
+def step1():
     title = request.args.get("title", "(No Title Provided)")
 
     if request.method == "POST":
-        # フォームから著者情報取得
-        author_name = request.form.get("author_name")
-        affiliation = request.form.get("affiliation")
-        address = request.form.get("address")
-        date = request.form.get("date")
+        author_name = request.form["author_name"]
+        affiliation = request.form["affiliation"]
+        address = request.form["address"]
+        date = request.form["date"]
 
-        # 出力ファイルパス
-        pdf_path = os.path.join(UPLOAD_FOLDER, "copyright_transfer.pdf")
-        sig_path = os.path.join(UPLOAD_FOLDER, "signature.bin")
-        pub_path = os.path.join(UPLOAD_FOLDER, "public_key.pem")
-        priv_path = os.path.join(UPLOAD_FOLDER, "private_key.pem")
+        # PDF生成用HTMLレンダリング
+        html = render_template("pdf_template.html",
+                               title=title,
+                               author_name=author_name,
+                               affiliation=affiliation,
+                               address=address,
+                               date=date)
+        generate_pdf_from_html(html, PDF_PATH)
 
-        try:
-            # 1. HTMLテンプレートを文字列として描画
-            html_content = render_template("pdf_template.html",
-                                           author_name=author_name,
-                                           affiliation=affiliation,
-                                           address=address,
-                                           date=date,
-                                           title=title)
+        return redirect(url_for("step2"))
 
-            # 2. HTML → PDF変換（WeasyPrint）
-            generate_pdf_from_html(html_content, pdf_path)
+    return render_template("step1.html", title=title)
 
-            # 3. 秘密鍵・公開鍵生成
-            private_key, _ = generate_keys(UPLOAD_FOLDER)
 
-            # 4. PDFをハッシュ化 → 署名ファイル出力
-            hash_value, signature = sign_pdf(private_key, pdf_path, sig_path)
-            signature_b64 = base64.b64encode(signature).decode()
+@app.route("/sign")
+def step2():
+    sig_path = os.path.join(UPLOAD_FOLDER, "signature.bin")
+    pub_path = os.path.join(UPLOAD_FOLDER, "public_key.pem")
+    priv_path = os.path.join(UPLOAD_FOLDER, "private_key.pem")
 
-            # 5. ダウンロード用ファイル情報
-            files = {
-                "pdf": "copyright_transfer.pdf",
-                "signature": "signature.bin",
-                "public_key": "public_key.pem",
-                "private_key": "private_key.pem"
-            }
+    try:
+        # 鍵生成
+        private_key, _ = generate_keys(UPLOAD_FOLDER)
 
-        except Exception as e:
-            error = str(e)
+        # ハッシュ＋署名
+        hash_value, signature = sign_pdf(private_key, PDF_PATH, sig_path)
+        signature_b64 = base64.b64encode(signature).decode()
 
-        return render_template("index.html",
+        # 秘密鍵削除
+        if os.path.exists(priv_path):
+            os.remove(priv_path)
+
+        return render_template("step2.html",
                                hash_value=hash_value,
                                signature_b64=signature_b64,
-                               files=files,
-                               title=title,
-                               error=error)
+                               files={
+                                   "pdf": PDF_FILENAME,
+                                   "signature": "signature.bin",
+                                   "public_key": "public_key.pem"
+                               })
 
-    return render_template("index.html", title=title)
+    except Exception as e:
+        return f"Error during signing: {e}", 500
 
 
 @app.route("/download/<filename>")
@@ -78,7 +69,7 @@ def download(filename):
     file_path = os.path.join(UPLOAD_FOLDER, filename)
 
     @after_this_request
-    def remove_file(response):
+    def delete_file(response):
         try:
             os.remove(file_path)
         except Exception:

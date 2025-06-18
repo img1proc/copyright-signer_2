@@ -1,6 +1,7 @@
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.backends import default_backend
+from hashlib import sha256
 import os
 
 def generate_keys(output_dir):
@@ -26,21 +27,15 @@ def generate_keys(output_dir):
 
     return private_key, public_key
 
-
 def sign_pdf(private_key, pdf_path, sig_path):
     with open(pdf_path, "rb") as f:
         data = f.read()
-
-    from hashlib import sha256
     hash_value = sha256(data).digest()
-
     signature = private_key.sign(
         hash_value,
         padding.PKCS1v15(),
         hashes.SHA256()
     )
-
     with open(sig_path, "wb") as f:
         f.write(signature)
-
     return hash_value.hex(), signature
